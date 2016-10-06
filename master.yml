@@ -45,8 +45,6 @@ resources:
         apt-get upgrade -y
         apt-get install -y ansible
               
-
-
   config_pip:
     type: OS::Heat::SoftwareConfig
     properties:
@@ -54,7 +52,8 @@ resources:
       outputs:
       - name: result
       config: |
-        #!/bin/sh -x
+        #!/bin/bash
+        echo "Trying pip"
         sudo apt-get install -y pip
         echo "y" | sudo pip install -U celery
         echo "y" | sudo pip install Flask
@@ -65,7 +64,7 @@ resources:
     type: OS::Heat::MultipartMime
     properties:
       parts:
-      - config: {get_resource: boot_config}
+      - config: {get_resource: boot_script}
       - config: {get_resource: config_pip}
       
   #deployment:
