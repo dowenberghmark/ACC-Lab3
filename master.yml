@@ -29,8 +29,40 @@ parameters:
     description: Public network with floating IP addresses.
     default: public
 
+
+  parameters:
+    file_content:
+      type: string
+      description: The contents of the file /tmp/file
 # Resource allocation
 resources:
+  boot_script:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      group: ungrouped
+      config: |
+        #!/bin/sh
+        echo "Hello, World!"
+        echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbuq/tma61uLdaQRn7kCIuzQiF12X1qsrb7I+PrdFs8MxEqeuWp5DOnUr07yk+EmvjI2zG966quhaExoNLPBSqUqA+9EgKXzkKrxr/fU3ktFvTHkpcg2Y+NcwAD8rqjcIdryRz5J7gTSvEvqyDPrCUCGdMudDQofVmZMksMLyjrr/O8TuZZkUpLsSQm7YdSdQj4RpapJGf1WTzLTsKJjA8JxskFrn6L3yVPf1n36LYtvBuv1bvvQ3AFv5pQ25+YQ8TXGYb83JSrgDs8e8SpTitY6gurhtKEkTjSIbx1Bc2bEm0XRKcvpfmLZH/U7zFAhkawCF+hH+qp0CYAPzLJr0D owen@OwenLaptop" >> /home/ubuntu/.ssh/authorized_keys
+        apt-add-repository -y ppa:ansible/ansible
+        apt-get update -y
+        apt-get upgrade -y
+        apt-get install -y ansible
+        echo "Running boot script"
+        apt-get install -y python python-pip
+        pip install -U Celery
+        apt-get install -y rabbitmq-server
+
+        
+  boot_config:
+    type: OS::Heat::CloudConfig
+    properties:
+      cloud_config:
+        write_files:
+        - path: /tmp/file
+          content: {get_param: file_content}
+        
+    
   cluster_sg:
     type: OS::Neutron::SecurityGroup
     properties:
@@ -71,8 +103,16 @@ resources:
       network: { get_resource: private_network }
       security_groups:
         - { get_resource: cluster_sg }
- 
-  my_instance0:
+
+
+  server_init:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+        - config: {get_resource: boot_config}
+        - config: {get_resource: boot_script}
+
+          my_instance0:
     type: OS::Nova::Server
     properties:
       image: { get_param: image }
@@ -82,20 +122,9 @@ resources:
       #  - { get_resource: cluster_sg }
       networks:
         - port: { get_resource: instance_port0 }         
-      user_data: |
-        #!/bin/sh
-        echo "Hello, World!"
-        echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbuq/tma61uLdaQRn7kCIuzQiF12X1qsrb7I+PrdFs8MxEqeuWp5DOnUr07yk+EmvjI2zG966quhaExoNLPBSqUqA+9EgKXzkKrxr/fU3ktFvTHkpcg2Y+NcwAD8rqjcIdryRz5J7gTSvEvqyDPrCUCGdMudDQofVmZMksMLyjrr/O8TuZZkUpLsSQm7YdSdQj4RpapJGf1WTzLTsKJjA8JxskFrn6L3yVPf1n36LYtvBuv1bvvQ3AFv5pQ25+YQ8TXGYb83JSrgDs8e8SpTitY6gurhtKEkTjSIbx1Bc2bEm0XRKcvpfmLZH/U7zFAhkawCF+hH+qp0CYAPzLJr0D owen@OwenLaptop" >> /home/ubuntu/.ssh/authorized_keys
-        apt-add-repository -y ppa:ansible/ansible
-        apt-get update -y
-        apt-get upgrade -y
-        apt-get install -y ansible
-	apt-get python
-	apt-get install python-pip
-	pip install -U Celery
-	apt-get install rabbitmq-server
-      user_data_format: RAW
-
+      
+      user_data_format: SOFTWARE_CONFIG
+      user_data: {get_resource: server_init}
 
 
 
