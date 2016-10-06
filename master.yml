@@ -1,6 +1,6 @@
 heat_template_version: 2013-05-23
 
-description: Simple template to deploy a single compute instance
+description: Try to contextualize with different config files
 
 # Declare parameters 
 parameters:
@@ -9,7 +9,7 @@ parameters:
     type: string
     label: Image name or ID
     description: Image to be used for compute instance
-    default: bcedbefb-9b05-43a6-8a04-93321066131e
+    default: c5352437-d878-4e64-9814-b1aa7d31c797
 
   flavor:
     type: string
@@ -21,7 +21,7 @@ parameters:
     type: string
     label: Key name
     description: Name of key-pair to be used for compute instance
-    default: daow0306M
+    default: daow0306
 
   public_network:
     type: string
@@ -30,10 +30,6 @@ parameters:
     default: public
 
 
-  parameters:
-    file_content:
-      type: string
-      description: The contents of the file /tmp/file
 # Resource allocation
 resources:
   boot_script:
@@ -41,28 +37,45 @@ resources:
     properties:
       group: ungrouped
       config: |
-        #!/bin/sh
+        #!/bin/bash
         echo "Hello, World!"
         echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbuq/tma61uLdaQRn7kCIuzQiF12X1qsrb7I+PrdFs8MxEqeuWp5DOnUr07yk+EmvjI2zG966quhaExoNLPBSqUqA+9EgKXzkKrxr/fU3ktFvTHkpcg2Y+NcwAD8rqjcIdryRz5J7gTSvEvqyDPrCUCGdMudDQofVmZMksMLyjrr/O8TuZZkUpLsSQm7YdSdQj4RpapJGf1WTzLTsKJjA8JxskFrn6L3yVPf1n36LYtvBuv1bvvQ3AFv5pQ25+YQ8TXGYb83JSrgDs8e8SpTitY6gurhtKEkTjSIbx1Bc2bEm0XRKcvpfmLZH/U7zFAhkawCF+hH+qp0CYAPzLJr0D owen@OwenLaptop" >> /home/ubuntu/.ssh/authorized_keys
         apt-add-repository -y ppa:ansible/ansible
         apt-get update -y
         apt-get upgrade -y
         apt-get install -y ansible
-        echo "Running boot script"
-        apt-get install -y python python-pip
-        pip install -U Celery
-        apt-get install -y rabbitmq-server
+              
 
-        
-  boot_config:
-    type: OS::Heat::CloudConfig
+
+  config_pip:
+    type: OS::Heat::SoftwareConfig
     properties:
-      cloud_config:
-        write_files:
-        - path: /tmp/file
-          content: {get_param: file_content}
+      group: script
+      outputs:
+      - name: result
+      config: |
+        #!/bin/sh -x
+        sudo apt-get install -y pip
+        echo "y" | sudo pip install -U celery
+        echo "y" | sudo pip install Flask
+        sudo apt-get install -y rabbitmq-server
+        echo "I got this far" > $heat_outputs_path.result
+
+  server_init:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+      - config: {get_resource: boot_config}
+      - config: {get_resource: config_pip}
+      
+  #deployment:
+    #type: OS::Heat::SoftwareDeployment
+    #properties:
+      #config:
+        #get_resource: config
+     # server:
+      #  get_resource: my_instance0
         
-    
   cluster_sg:
     type: OS::Neutron::SecurityGroup
     properties:
@@ -105,14 +118,8 @@ resources:
         - { get_resource: cluster_sg }
 
 
-  server_init:
-    type: OS::Heat::MultipartMime
-    properties:
-      parts:
-        - config: {get_resource: boot_config}
-        - config: {get_resource: boot_script}
 
-          my_instance0:
+  my_instance0:
     type: OS::Nova::Server
     properties:
       image: { get_param: image }
@@ -147,3 +154,9 @@ outputs:
   instance_ip:
     description: IP address of the instance
     value: { get_attr: [my_instance0, first_address, floating_ip, floating_ip_address] }
+#  result:
+ #   value:
+  #    get_attr: [deployment, result]
+  #stdout:
+   # value:
+    #  get_attr: [deployment, deploy_stdout]
