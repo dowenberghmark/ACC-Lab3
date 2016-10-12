@@ -20,7 +20,7 @@ def task():
     #f = request.files['./theFile']
     #f.save('./theFile')
 
-    return jsonData
+    return data
 
 @app.route('/')
 def test():
