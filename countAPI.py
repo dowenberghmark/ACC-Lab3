@@ -12,8 +12,8 @@ def task():
     saveJson = open("./theFile", 'w')
     saveJson.write(json.dumps(data))
     saveJson.close()
-    if request.method == 'POST':
-        f = request.files['./theFile']
+    if Flask.method == 'POST':
+        f = Flask.files['./theFile']
         f.save('/var/www/uloads/theFile')
     return data
 
