@@ -20,16 +20,6 @@ def task():
     #f = request.files['./theFile']
     #f.save('./theFile')
 
-    file = request.files['./theFile']
-    if not file:
-        return "No file"
-
-    file_contents = file.stream.read().decode("utf-8")
-
-    result = transform(file_contents)
-
-    response = make_response(result)
-    response.headers["Content-Disposition"] = "attachment; filename=theFile"
     return jsonData
 
 @app.route('/')
