@@ -12,7 +12,7 @@ app = Flask(__name__)
 def task():
     data = subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
-    jsonData = json.dumps(data.decode("utf-8"))
+    jsonData = json.dumps(str(data.decode("utf-8")).lower())
     saveJson.write(jsonData)
     saveJson.close()
     
