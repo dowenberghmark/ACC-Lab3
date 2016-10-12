@@ -33,7 +33,7 @@ def task():
     return jsonData
 
 @app.route('/')
-def task():
+def test():
     return 'hello'
 
 if __name__ == '__main__':
