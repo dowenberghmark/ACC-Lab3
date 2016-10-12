@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 
-app = Flask(__name__)
+app = request(__name__)
 
 @app.route('/task', methods=['GET', 'POST'])
 def task():
