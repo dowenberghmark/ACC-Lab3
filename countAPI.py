@@ -29,7 +29,7 @@ def task():
     result = transform(file_contents)
 
     response = make_response(result)
-    response.headers["Content-Disposition"] = "attachment; filename=./theFile"
+    response.headers["Content-Disposition"] = "attachment; filename=theFile"
     return response
 
 if __name__ == '__main__':
