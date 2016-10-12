@@ -1,6 +1,7 @@
 from flask import request
 from flask import Flask
-import json
+from flask import json
+#import json
 import subprocess
 import sys
 
@@ -17,14 +18,16 @@ def task():
     saveJson.write(jsonData)
     saveJson.close()
     
-    #f = request.files['./theFile']
-    #f.save('./theFile')
+    f = request.files['/theFile']
+    f.save('theFile')
 
-    return data
+    return 
 
-@app.route('/')
-def test():
-    return 'hello'
+@app.route('/theFile', methods=['GET', 'POST'])
+def download():
+    uploads = os.path.join(current_app.root_path)
+    return send_from_directory(directory=uploads, filename="theFile")
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
