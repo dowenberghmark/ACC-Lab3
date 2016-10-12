@@ -13,7 +13,7 @@ def task():
     data = subprocess.call(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data)
-    saveJson.write(jsonData)
+    saveJson.write(data)
     saveJson.close()
     
     #f = request.files['./theFile']
