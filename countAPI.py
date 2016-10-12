@@ -6,7 +6,7 @@ import sys
 
 app = Flask(__name__)
 
-@app.route('~/task.py', methods=['GET', 'POST'])
+@app.route('/task', methods=['GET', 'POST'])
 def task():
     data=subprocess.check_output(["python","task.py"])
     saveJson = open("./theFile", 'w')
@@ -14,7 +14,7 @@ def task():
     saveJson.close()
     if request.method == 'POST':
         f = request.files['./theFile']
-        f.save('var/www/uloads/theFile')
+        f.save('/var/www/uloads/theFile')
     return data
 
 if __name__ == '__main__':
