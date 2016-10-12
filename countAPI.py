@@ -4,7 +4,8 @@ import json
 import subprocess
 import sys
 
-
+def transform(text_file_contents):
+    return text_file_contents.replace("=", ",")
 app = Flask(__name__)
 
 @app.route('/task', methods=['GET'])
@@ -14,11 +15,21 @@ def task():
     jsonData = json.dumps(data)
     saveJson.write(jsonData)
     saveJson.close()
-    if request.method == 'GET':
-        f = request.files['./theFile']
-        f.save('./theFile')
-        return ()
-    return data
+    
+    #f = request.files['./theFile']
+    #f.save('./theFile')
+
+    file = request.files['./theFile']
+    if not file:
+        return "No file"
+
+    file_contents = file.stream.read().decode("utf-8")
+
+    result = transform(file_contents)
+
+    response = make_response(result)
+    response.headers["Content-Disposition"] = "attachment; filename=result.csv"
+    return response
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
