@@ -7,14 +7,14 @@ import sys
 
 app = Flask(__name__)
 
-@app.route('/task', methods=['GET', 'POST'])
+@app.route('/task', methods=['GET'])
 def task():
     data = subprocess.call(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data)
     saveJson.write(jsonData)
     saveJson.close()
-    if request.method == 'POST':
+    if request.method == 'GET':
         f = request.files['./theFile']
         f.save('./theFile')
         return ()
