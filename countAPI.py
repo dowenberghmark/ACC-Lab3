@@ -32,5 +32,9 @@ def task():
     response.headers["Content-Disposition"] = "attachment; filename=theFile"
     return jsonData
 
+@app.route('/')
+def task():
+    return 'hello'
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
