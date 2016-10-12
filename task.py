@@ -6,10 +6,6 @@ import subprocess
 import time, os, sys
 import inspect
 from os import environ as env
-
-from flask import Flask
-
-#from  novaclient import client
 import keystoneclient.v3.client as ksclient
 from keystoneauth1.identity import v3
 from keystoneauth1 import loading
@@ -74,7 +70,6 @@ def allFiles (conn):
         countOccurences("./dump.txt", occurences)
     
         
-    #print (occurences)
-    saveJson = open("theFile", 'w')
-    saveJson.write(json.dumps(occurences))
-    saveJson.close()
+    print (occurences)
+
+allFiles(conn)
