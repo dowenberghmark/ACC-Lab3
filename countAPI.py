@@ -1,10 +1,11 @@
 from flask import request
+from flask import Flask
 import json
 import subprocess
 import sys
 
 
-app = request(__name__)
+app = Flask(__name__)
 
 @app.route('/task', methods=['GET', 'POST'])
 def task():
