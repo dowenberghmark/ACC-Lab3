@@ -61,13 +61,13 @@ def allFiles (conn):
     for item in containerData[1]:
         itemContainer.append(item['name'])
         #print (itemContainer[13])
-        AFile = conn.get_object( container="tweets", obj=item['name'])
-        #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
-        target = open("./dump.txt", 'w')
-        text = str(AFile[1].decode("utf-8"))
-        target.write(text)
-        target.close()
-        countOccurences("./dump.txt", occurences)
+        #AFile = conn.get_object( container="tweets", obj=item['name'])
+    AFile = conn.get_object( container="tweets", obj=itemContainer[13])
+    target = open("./dump.txt", 'w')
+    text = str(AFile[1].decode("utf-8"))
+    target.write(text)
+    target.close()
+    countOccurences("./dump.txt", occurences)
     
         
     print (occurences)
