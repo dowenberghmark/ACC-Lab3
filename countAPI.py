@@ -4,6 +4,7 @@ from flask import json
 #import json
 import subprocess
 import sys
+import os
 
 def transform(text_file_contents):
     return text_file_contents.replace("=", ",")
@@ -25,7 +26,7 @@ def task():
 
 @app.route('/theFile', methods=['GET', 'POST'])
 def download():
-    uploads = os.path.join(current_app.root_path)
+    uploads = os.path.join(current_app.root_path, app.config['./'])
     return send_from_directory(directory=uploads, filename="theFile")
 
 
