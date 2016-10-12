@@ -13,6 +13,7 @@ def task():
     data = subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(str(data.decode("utf-8")).lower())
+    print (jsonData)
     saveJson.write(jsonData)
     saveJson.close()
     
