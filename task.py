@@ -11,7 +11,7 @@ from keystoneauth1.identity import v3
 from keystoneauth1 import loading
 from keystoneauth1 import session
 import os.path
-
+# _*_ coding:utf-8 _*_
 _authurl = env['OS_AUTH_URL']
 _auth_version = '3'
 _user = env['OS_USERNAME']
@@ -43,7 +43,7 @@ def countOccurences(f, occurences):
                 formatedTweet = json.loads(aTweet)
                 json_data.append(formatedTweet)
                 if not formatedTweet["retweeted"]:
-                    noRetweetsText = noRetweetsText + (str(formatedTweet["text"].decode('utf-8')).lower())
+                    noRetweetsText = noRetweetsText + (str(formatedTweet["text"]).lower())
 
     counts = Counter(noRetweetsText.split())
 
