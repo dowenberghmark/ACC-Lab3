@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import request
 import json
 import subprocess
 import sys
@@ -12,9 +12,9 @@ def task():
     saveJson = open("./theFile", 'w')
     saveJson.write(json.dumps(data))
     saveJson.close()
-    if Flask.method == 'POST':
-        f = Flask.files['./theFile']
-        f.save('/var/www/uloads/theFile')
+    if request.method == 'POST':
+        f = request.files['/theFile']
+        f.save('/upload/theFile')
     return data
 
 if __name__ == '__main__':
