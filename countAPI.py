@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/task', methods=['GET'])
 def task():
-    data = subprocess.call(["python3","task.py"])
+    data = subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data)
     saveJson.write(data)
