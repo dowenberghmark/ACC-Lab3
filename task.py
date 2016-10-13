@@ -39,7 +39,7 @@ def countOccurences(f, occurences):
     noRetweetsText = ""
     #aTweet = ""
     
-    with open(f, 'r') as k:
+    with open(f, 'r+',1) as k:
     #print ("i'm to big for tweet")
         for aTweet in k:
             #print (aTweet)
