@@ -82,7 +82,7 @@ def task():
     result = "Result: "+ str(jsonData) + "\n To download the File use:\n curl -o http://130.238.29.82:5000/theFile\n"
     return  (result)#send_file("./theFile", as_attachment= True)
 
-@flask.app.route('/theFile', methods=['GET', 'POST'])
+@flask_app.route('/theFile', methods=['GET', 'POST'])
 def download():
      return send_file("theFile", as_attachment=True)
 
@@ -113,7 +113,7 @@ def countOccurences(f, occurences):
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
     
-celery.task()
+@celery.task()
 def allFiles (conn):
     itemContainer = []
     containerData = conn.get_container("tweets")
