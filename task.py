@@ -59,7 +59,6 @@ def countOccurences(f, occurences):
 
 def allFiles (conn):
     itemContainer = []
-    ocurList = []
     containerData = conn.get_container("tweets")
     fileNr = 0
     for item in containerData[1]:
@@ -72,7 +71,6 @@ def allFiles (conn):
     conn.close()
     for item in itemContainer:
         fileNr = fileNr + 1
-        ocurList.append()
         print ("file: " + str(fileNr) + " name: " + str(item))
         try:
             countOccurences("./" + str(item), occurences)
