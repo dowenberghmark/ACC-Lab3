@@ -40,6 +40,7 @@ def countOccurences(f, occurences):
     
     #with open(f, 'r+',1) as k:
     for aTweet in f:
+        print (aTweet)
         if aTweet != '\n':
             formatedTweet = json.loads(aTweet)
             if not formatedTweet["retweeted"]:
