@@ -13,6 +13,8 @@ def transform(text_file_contents):
     return text_file_contents.replace("=", ",")
 app = Flask(__name__)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 @app.route('/task/', methods=['GET'])
 def task():
     data = subprocess.check_output(["python3","task.py"])
