@@ -22,11 +22,11 @@ def task():
     jsonData = json.dumps(str(data.decode("utf-8")).lower())
     print (jsonData)
     saveJson.write(jsonData)
-    saveJson.close()
+    
     
     #f = request.files['/theFile']
-    #f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'theFile'))
-
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
+    saveJson.close()
     return "hello"
 
 @app.route('/theFile/', methods=['GET', 'POST'])
