@@ -47,12 +47,13 @@ def countOccurences(f, occurences):
         if letter == '\n' and flag:
             flag = False
             formatedTweet = json.loads(aTweet)
+            aTweet = ""
             if not formatedTweet["retweeted"]:
                 noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
                 counts = Counter(noRetweetsText.split())
                 for find in occurences:    
                     occurences[find] = occurences[find] + counts[find]
-    k.close()
+    
     
     
     
