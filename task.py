@@ -72,13 +72,13 @@ def allFiles (conn):
         fileNr = fileNr + 1
         itemContainer.append(item['name'])
         #print (itemContainer[13])
-        while True:
-            try:
-                #AFile = conn.get_object( container="tweets", obj=item['name'])
-                AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
-                break
-            except:
-                raise
+        #while True:
+        try:
+            #AFile = conn.get_object( container="tweets", obj=item['name'])
+            AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
+            break
+        except:
+            raise
                 #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
         #print ("Working on File number: " + str(fileNr))
         #target = open(item['name'], 'w')
