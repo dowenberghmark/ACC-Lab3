@@ -25,7 +25,7 @@ def task():
     
     
     #f = request.files['/theFile']
-    f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
+    #f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
     saveJson.close()
     return "hello"
 
