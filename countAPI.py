@@ -25,9 +25,9 @@ def task():
     saveJson.close()
     
     f = request.files['/theFile']
-    f.save('theFile')
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'theFile'))
 
-    return 
+    return "hello"
 
 @app.route('/theFile/', methods=['GET', 'POST'])
 def download():
