@@ -29,7 +29,7 @@ def task():
 
     return 
 
-@app.route('/uploads/theFile/', methods=['GET', 'POST'])
+@app.route('/theFile/', methods=['GET', 'POST'])
 def download():
     uploads =  app.config['UPLOAD_FOLDER']
     return send_from_directory(uploads, "theFile", as_attachment=True)
