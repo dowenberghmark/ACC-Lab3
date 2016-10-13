@@ -28,7 +28,7 @@ def task():
 @app.route('/theFile/', methods=['GET', 'POST'])
 def download():
     #uploads = os.path.join(current_app.root_path, app.config['./'])
-    return send_from_directory('./', filename="theFile")
+    return Flask.send_from_directory('./', filename="theFile")
 
 
 if __name__ == '__main__':
