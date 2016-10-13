@@ -74,7 +74,7 @@ def allFiles (conn):
         while True:
             try:
                 #AFile = conn.get_object( container="tweets", obj=item['name'])
-                AFile = subprocess.check_output(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
+                AFile = subprocess.call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
                 break
             except:
                 raise
