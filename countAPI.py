@@ -7,8 +7,8 @@ from flask import send_file
 import subprocess
 import sys
 import os
-from tasks import allFiles
-from tasks import makeBarchart
+from task import allFiles
+from task import makeBarchart
 
 
 UPLOAD_FOLDER = '~/ACC-Lab3/'
