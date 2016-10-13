@@ -82,8 +82,8 @@ def allFiles (conn):
      #   target.write(text)
     #target.close()
     #for item in itemContainer:
-        #fileNr = fileNr + 1
-        #print ("file: " + str(fileNr)) #+ " name: " + str(item))
+        fileNr = fileNr + 1
+        print ("file: " + str(fileNr)) #+ " name: " + str(item))
         try:
             countOccurences(text, occurences)
         except:
