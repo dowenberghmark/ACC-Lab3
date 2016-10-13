@@ -55,12 +55,10 @@ def countOccurences(f, occurences):
     counts = Counter(noRetweetsText.split())
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
+    k.close()
     
     
     
-    
-
-
 
 
 def allFiles (conn):
