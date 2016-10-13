@@ -81,7 +81,8 @@ def allFiles (conn):
         try:
             countOccurences(text, occurences)
         except:
-            print (occurences)
+            raise
+            #print (occurences)
         gc.collect()
     conn.close()    
     print (occurences)
