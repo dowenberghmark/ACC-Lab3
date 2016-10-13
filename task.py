@@ -78,23 +78,14 @@ def allFiles (conn):
             #break
         except:
             raise
-                #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
-        #print ("Working on File number: " + str(fileNr))
-        #target = open(item['name'], 'w')
-        #text = str(target.decode("utf-8"))
-        
-        #target.write(text)
-
-        #target.close()
     for item in itemContainer:
         fileNr = fileNr + 1
         print ("file: " + str(fileNr) + "name: " + str(item))
-        countOccurences("./" + str(item), occurences)
+        try:
+            countOccurences("./" + str(item), occurences)
+        except:
+            raise
         gc.collect()
-        #print (occurences)
-        #subprocess.call(["rm", item['name'] ])
-        #break
-        
         
     print (occurences)
 
