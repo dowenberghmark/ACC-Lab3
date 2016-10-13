@@ -32,8 +32,7 @@ def task():
 
 @app.route('/theFile', methods=['GET', 'POST'])
 def download():
-     uploads =  app.config['./']
-     return send_file(uploads, "theFile", as_attachment=True)
+     return send_file("theFile", as_attachment=True)
 
 # @app.route('/uploads/<filename>')
 # def uploaded_file(filename):
