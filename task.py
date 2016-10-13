@@ -52,9 +52,9 @@ def countOccurences(f, occurences):
             #aTweet = ""
             if not formatedTweet["retweeted"]:
                 noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
-                counts = Counter(noRetweetsText.split())
-                for find in occurences:    
-                    occurences[find] = occurences[find] + counts[find]
+    counts = Counter(noRetweetsText.split())
+    for find in occurences:    
+        occurences[find] = occurences[find] + counts[find]
     
     
     
