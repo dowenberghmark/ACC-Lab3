@@ -40,7 +40,7 @@ occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne'
 def countOccurences(f, occurences):
     noRetweetsText = ""
     #aTweet = ""
-    counter = 0
+    
     with open(f, 'r') as k:
     #print ("i'm to big for tweet")
         for aTweet in k:
@@ -52,17 +52,16 @@ def countOccurences(f, occurences):
                 counter = 1
                 
                 formatedTweet = json.loads(aTweet)
-                #aTweet = ""
                 json_data.append(formatedTweet)
                 if not formatedTweet["retweeted"]:
-                    noRetweetsText = (str(formatedTweet["text"]))
-                    counts = Counter(noRetweetsText.split())
-                    for find in occurences:    
-                        occurences[find] = occurences[find] + counts[find]
+                    noRetweetsText = noReetweetsText(str(formatedTweet["text"]))
+    counts = Counter(noRetweetsText.split())
+    for find in occurences:    
+        occurences[find] = occurences[find] + counts[find]
                     #break
             #print (occurences)
         k.close()
-    gc.collect()
+    
 
 
 
@@ -94,6 +93,7 @@ def allFiles (conn):
         fileNr = fileNr + 1
         print ("file: " + str(fileNr))
         countOccurences("./" + str(item), occurences)
+        gc.collect()
         #print (occurences)
         #subprocess.call(["rm", item['name'] ])
         #break
