@@ -71,8 +71,8 @@ celery = make_celery(flask_app)
 
 flask_app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@flask_app.route('/task/', methods=['GET'])
-def task():
+@flask_app.route('/doJob/', methods=['GET'])
+def doJob():
     data = allFiles(conn)#subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data.decode("utf-8").lower())
