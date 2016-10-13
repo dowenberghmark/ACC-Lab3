@@ -42,6 +42,7 @@ def countOccurences(f, occurences):
     with open(f, 'r') as k:
     #print ("i'm to big for tweet")
         for aTweet in k:
+            noRetweetsText = (str(formatedTweet["text"]).lower())
             #print (aTweet)
         # if letter != '\n'  :
         #     aTweet += letter
@@ -86,8 +87,8 @@ def allFiles (conn):
         #target.write(text)
         #target.close()
         countOccurences(item['name'], occurences)
-        print (occurences)
-        subprocess.call(["rm", item['name'] ])
+        #print (occurences)
+        #subprocess.call(["rm", item['name'] ])
         #break
     
         
