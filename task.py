@@ -44,6 +44,7 @@ def countOccurences(f, occurences):
     with open(f, 'r') as k:
     #print ("i'm to big for tweet")
         for aTweet in k:
+            gc.collect()
             #print (aTweet)
         # if letter != '\n'  :
         #     aTweet += letter
@@ -55,7 +56,7 @@ def countOccurences(f, occurences):
                 #aTweet = ""
                 json_data.append(formatedTweet)
                 if not formatedTweet["retweeted"]:
-                    noRetweetsText = (str(formatedTweet["text"]).lower())
+                    noRetweetsText = (str(formatedTweet["text"]))
                     counts = Counter(noRetweetsText.split())
                     for find in occurences:    
                         occurences[find] = occurences[find] + counts[find]
