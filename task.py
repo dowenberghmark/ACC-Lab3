@@ -49,9 +49,10 @@ occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne'
 
 
 flask_app = Flask(__name__)
-flask_app.config['CELERY_BROKER_URL'] = 'amqp'
-flask_app.config['CELERY_BACKEND'] = 'amqp://guest:guest@localhost/5672'
-
+flask_app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
+)
 
 def make_celery(app):
     celery = Celery(app.import_name, backend=app.config['CELERY_BACKEND'],
