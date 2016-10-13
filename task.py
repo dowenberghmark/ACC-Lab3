@@ -15,6 +15,9 @@ import gc
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from celery import Celery
+
+app = Celery('tasks', backend='amqp', broker='amqp://mast:pass@127.0.0.1/mast_host')
 
 
 # _*_ coding:utf-8 _*_
@@ -65,7 +68,7 @@ def countOccurences(f, occurences):
     
     
 
-
+@app.task()
 def allFiles (conn):
     itemContainer = []
     containerData = conn.get_container("tweets")
@@ -96,16 +99,15 @@ def allFiles (conn):
             #print (occurences)
         gc.collect()
     conn.close()    
-    print (occurences)
+    return (occurences)
 
-allFiles(conn)
-
-
+#allFiles(conn)
 
 
 
 
-plt.bar(range(len(occurences)), occurences.values(), align='center')
-plt.xticks(range(len(occurences)), occurences.keys())
-
-plt.savefig("./barchart.png", dpi=150)
+@app.task(ignore_result=True)
+def makeBarchart():
+    plt.bar(range(len(occurences)), occurences.values(), align='center')
+    plt.xticks(range(len(occurences)), occurences.keys())
+    plt.savefig("./barchart.png", dpi=150)
