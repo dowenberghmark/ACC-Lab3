@@ -28,12 +28,12 @@ def task():
     #f = request.files['/theFile']
     #f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
     #saveJson.close()
-    return send_file("./theFile", as_attachment= True)
+    return  jsonData#send_file("./theFile", as_attachment= True)
 
-# @app.route('/theFile/', methods=['GET', 'POST'])
-# def download():
-#     uploads =  app.config['UPLOAD_FOLDER']
-#     return send_from_directory(uploads, "theFile", as_attachment=True)
+@app.route('/theFile', methods=['GET', 'POST'])
+def download():
+     uploads =  app.config['UPLOAD_FOLDER']
+     return send_from_directory(uploads, "theFile", as_attachment=True)
 
 # @app.route('/uploads/<filename>')
 # def uploaded_file(filename):
