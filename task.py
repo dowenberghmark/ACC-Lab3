@@ -86,12 +86,12 @@ def allFiles (conn):
         #text = str(target.decode("utf-8"))
         
         #target.write(text)
+
         #target.close()
-        #countOccurences(item['name'], occurences)
+    for item in itemContainer:
+        countOccurences(item['name'], occurences)
         #print (occurences)
         #subprocess.call(["rm", item['name'] ])
-        
-        gc.collect()
         #break
         
         
