@@ -27,8 +27,9 @@ def task():
     
     #f = request.files['/theFile']
     #f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
-    #saveJson.close()
-    return  jsonData#send_file("./theFile", as_attachment= True)
+    saveJson.close()
+    result = "Result: "+ str(jsonData) + "\n To download the File use:\n curl -o http://130.238.29.82:5000/theFile"
+    return  (result)#send_file("./theFile", as_attachment= True)
 
 @app.route('/theFile', methods=['GET', 'POST'])
 def download():
