@@ -118,6 +118,8 @@ UPLOAD_FOLDER = '~/ACC-Lab3/'
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config.update(CELERY_BROKER_URL='amqp://mast:pass@127.0.0.1/mast_host',
+    CELERY_RESULT_BACKEND='amqp://mast:pass@127.0.0.1/mast_host')
 
 @app.route('/task/', methods=['GET'])
 def task():
