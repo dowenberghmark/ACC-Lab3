@@ -28,7 +28,7 @@ def task():
     #f = request.files['/theFile']
     #f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
     #saveJson.close()
-    return send_file(saveJson)
+    return send_file(jsonData)
 
 # @app.route('/theFile/', methods=['GET', 'POST'])
 # def download():
