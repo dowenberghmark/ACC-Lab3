@@ -32,8 +32,6 @@ conn = client.Connection(
     auth_version=_auth_version
 )
 
-
-#NOTE: add exception for trying to download
 json_data = []
 noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
@@ -49,7 +47,6 @@ def countOccurences(f, occurences):
         #     aTweet += letter
         #     counter = 0
             if aTweet != '\n':# and counter == 0:
-                counter = 1
                 
                 formatedTweet = json.loads(aTweet)
                 json_data.append(formatedTweet)
@@ -58,9 +55,9 @@ def countOccurences(f, occurences):
     counts = Counter(noRetweetsText.split())
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
-                    #break
-            #print (occurences)
-        k.close()
+    
+    
+    
     
 
 
@@ -91,7 +88,7 @@ def allFiles (conn):
         #target.close()
     for item in itemContainer:
         fileNr = fileNr + 1
-        print ("file: " + str(fileNr))
+        print ("file: " + str(fileNr) + "name: " + str(item))
         countOccurences("./" + str(item), occurences)
         gc.collect()
         #print (occurences)
