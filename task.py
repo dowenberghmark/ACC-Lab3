@@ -37,26 +37,27 @@ noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
 def countOccurences(f, occurences):
     noRetweetsText = ""
-    aTweet = ""
+    #aTweet = ""
     counter = 0
-    ###with open(f, 'r') as k:
+    with open(f, 'r') as k:
     #print ("i'm to big for tweet")
-    for letter in f:
-        if letter != '\n'  :
-            aTweet += letter
-            counter = 0
-        if letter == '\n' and counter == 0:
-            counter = 1
+        for aTweet in k:
             #print (aTweet)
-            formatedTweet = json.loads(aTweet)
-            aTweet = ""
-            json_data.append(formatedTweet)
-            if not formatedTweet["retweeted"]:
-                noRetweetsText = (str(formatedTweet["text"]).lower())
-                counts = Counter(noRetweetsText.split())
-                for find in occurences:    
-                    occurences[find] = occurences[find] + counts[find]
-                break
+        # if letter != '\n'  :
+        #     aTweet += letter
+        #     counter = 0
+            if aTweet != '\n':# and counter == 0:
+                counter = 1
+                
+                formatedTweet = json.loads(aTweet)
+                #aTweet = ""
+                json_data.append(formatedTweet)
+                if not formatedTweet["retweeted"]:
+                    noRetweetsText = (str(formatedTweet["text"]).lower())
+                    counts = Counter(noRetweetsText.split())
+                    for find in occurences:    
+                        occurences[find] = occurences[find] + counts[find]
+                    #break
     
 
 
@@ -72,18 +73,19 @@ def allFiles (conn):
         #print (itemContainer[13])
         while True:
             try:
-                AFile = conn.get_object( container="tweets", obj=item['name'])
+                #AFile = conn.get_object( container="tweets", obj=item['name'])
+                AFile = subprocess.check_output(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
                 break
             except:
                 raise
                 #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
         print ("Working on File number: " + str(fileNr))
-        #target = open("./dump.txt", 'w')
-        text = str(AFile[1].decode("utf-8"))
+        #target = open(item['name'], 'w')
+        #text = str(target.decode("utf-8"))
         
         #target.write(text)
         #target.close()
-        countOccurences(text, occurences)
+        countOccurences(item['name'], occurences)
         #break
     
         
