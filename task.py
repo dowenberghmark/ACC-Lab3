@@ -38,19 +38,19 @@ def countOccurences(f, occurences):
     noRetweetsText = ""
     
     with open(f, 'r+',1) as k:
-        print ("here: 0 died?")
+        #print ("here: 0 died?")
         for aTweet in k:
             if aTweet != '\n':
-                print ("here: 1 died?")
+                #print ("here: 1 died?")
                 formatedTweet = json.loads(aTweet)
                 if not formatedTweet["retweeted"]:
-                    print ("here: 2 died?")
+                    #print ("here: 2 died?")
                     noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
-    print ("here: 3 died?")
+    #print ("here: 3 died?")
     counts = Counter(noRetweetsText.split())
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
-    print ("here: 4 died?")
+    #print ("here: 4 died?")
     k.close()
     
     
