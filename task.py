@@ -11,6 +11,7 @@ from keystoneauth1.identity import v3
 from keystoneauth1 import loading
 from keystoneauth1 import session
 import os.path
+import gc
 # _*_ coding:utf-8 _*_
 _authurl = env['OS_AUTH_URL']
 _auth_version = '3'
@@ -42,7 +43,6 @@ def countOccurences(f, occurences):
     with open(f, 'r') as k:
     #print ("i'm to big for tweet")
         for aTweet in k:
-            noRetweetsText = ""
             #print (aTweet)
         # if letter != '\n'  :
         #     aTweet += letter
@@ -89,6 +89,7 @@ def allFiles (conn):
         countOccurences(item['name'], occurences)
         #print (occurences)
         #subprocess.call(["rm", item['name'] ])
+        gc.collect()
         #break
     
         
