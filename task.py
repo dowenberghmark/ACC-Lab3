@@ -54,7 +54,7 @@ def countOccurences(f, occurences):
                 formatedTweet = json.loads(aTweet)
                 json_data.append(formatedTweet)
                 if not formatedTweet["retweeted"]:
-                    noRetweetsText = noReetweetsText(str(formatedTweet["text"]))
+                    noRetweetsText = noReetweetsText + (str(formatedTweet["text"]))
     counts = Counter(noRetweetsText.split())
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
