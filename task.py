@@ -62,17 +62,22 @@ def allFiles (conn):
         itemContainer.append(item['name'])
         while True :
             try:
-                #AFile = conn.get_object( container="tweets", obj=item['name'])
-                AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
+                AFile = conn.get_object( container="tweets", obj=item['name'])
+                #AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
                 break
             except:
                 raise
+        text = str(AFile[1].decode("utf-8"))
+        target = open("./dump.txt", 'wa')
+        target.write(text)
+        target.close()
+        
     conn.close()
     for item in itemContainer:
         fileNr = fileNr + 1
         #print ("file: " + str(fileNr) + " name: " + str(item))
         try:
-            countOccurences("./" + str(item), occurences)
+            countOccurences("./dump.txt", occurences)
         except:
             print (occurences)
         gc.collect()
