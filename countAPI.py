@@ -38,6 +38,14 @@ def download():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+@app.route('/test/<filename>')
+def dictionary_download (filename):
+
+    path = os.path.abspath (app.config['TYPO_DICT_PATH'])
+    assert os.path.exists (path)
+
+    return send_from_directory (path, filename, as_attachment=True,
+        mimetype='application/octet-stream')
 
 
 if __name__ == '__main__':
