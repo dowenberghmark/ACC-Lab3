@@ -37,17 +37,10 @@ noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
 def countOccurences(f, occurences):
     noRetweetsText = ""
-    #aTweet = ""
     
     with open(f, 'r+',1) as k:
-    #print ("i'm to big for tweet")
         for aTweet in k:
-            #print (aTweet)
-        # if letter != '\n'  :
-        #     aTweet += letter
-        #     counter = 0
-            if aTweet != '\n':# and counter == 0:
-                
+            if aTweet != '\n':
                 formatedTweet = json.loads(aTweet)
                 json_data.append(formatedTweet)
                 if not formatedTweet["retweeted"]:
@@ -66,16 +59,13 @@ def allFiles (conn):
     containerData = conn.get_container("tweets")
     fileNr = 0
     for item in containerData[1]:
-        
         itemContainer.append(item['name'])
-        #print (itemContainer[13])
-        #while True:
         try:
             #AFile = conn.get_object( container="tweets", obj=item['name'])
             AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
-            #break
         except:
             raise
+    conn.close()
     for item in itemContainer:
         fileNr = fileNr + 1
         print ("file: " + str(fileNr) + " name: " + str(item))
