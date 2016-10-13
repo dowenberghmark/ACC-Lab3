@@ -58,15 +58,15 @@ def allFiles (conn):
     containerData = conn.get_container("tweets")
     fileNr = 0
     for item in containerData[1]:
-        if item != (containerData[1])[0]:
-            itemContainer.append(item['name'])
-            while True :
-                try:
-                    #AFile = conn.get_object( container="tweets", obj=item['name'])
-                    AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
-                    break
-                except:
-                    raise
+ 
+        itemContainer.append(item['name'])
+        while True :
+            try:
+                #AFile = conn.get_object( container="tweets", obj=item['name'])
+                AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
+                break
+            except:
+                raise
     conn.close()
     for item in itemContainer:
         fileNr = fileNr + 1
@@ -86,7 +86,7 @@ allFiles(conn)
 
 
 
-plt.bar(range(len(occurences)), occurences.values(), align='center')
-plt.xticks(range(len(occurences)), occurences.keys())
+#plt.bar(range(len(occurences)), occurences.values(), align='center')
+#plt.xticks(range(len(occurences)), occurences.keys())
 
-plt.show()
+#plt.show()
