@@ -54,10 +54,41 @@ conn = client.Connection(
     auth_version=_auth_version
 )
 
-matplotlib.use('Agg')
-
+UPLOAD_FOLDER = '~/ACC-Lab3/'
 noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
+
+
+flask_app = Flask(__name__)
+flask_app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
+)
+celery = make_celery(flask_app)
+
+flask_app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@flask_app.route('/task/', methods=['GET'])
+def task():
+    data = allFiles(conn)#subprocess.check_output(["python3","task.py"])
+    saveJson = open("./theFile", 'w')
+    jsonData = json.dumps(data.decode("utf-8").lower())
+    print (data.decode("utf-8").lower())
+    saveJson.write(jsonData)
+    
+    saveJson.close()
+    result = "Result: "+ str(jsonData) + "\n To download the File use:\n curl -o http://130.238.29.82:5000/theFile\n"
+    return  (result)#send_file("./theFile", as_attachment= True)
+
+@flask.app.route('/theFile', methods=['GET', 'POST'])
+def download():
+     return send_file("theFile", as_attachment=True)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',debug=True)
+
+
 
 def countOccurences(f, occurences):
     noRetweetsText = ""
@@ -125,36 +156,3 @@ def makeBarchart():
     plt.savefig("./barchart.png", dpi=150)
 
 
-UPLOAD_FOLDER = '~/ACC-Lab3/'
-
-app = Flask(__name__)
-
-
-flask_app = Flask(__name__)
-flask_app.config.update(
-    CELERY_BROKER_URL='redis://localhost:6379',
-    CELERY_RESULT_BACKEND='redis://localhost:6379'
-)
-celery = make_celery(flask_app)
-
-flask_app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-@flask_app.route('/task/', methods=['GET'])
-def task():
-    data = allFiles(conn)#subprocess.check_output(["python3","task.py"])
-    saveJson = open("./theFile", 'w')
-    jsonData = json.dumps(data.decode("utf-8").lower())
-    print (data.decode("utf-8").lower())
-    saveJson.write(jsonData)
-    
-    saveJson.close()
-    result = "Result: "+ str(jsonData) + "\n To download the File use:\n curl -o http://130.238.29.82:5000/theFile\n"
-    return  (result)#send_file("./theFile", as_attachment= True)
-
-@flask.app.route('/theFile', methods=['GET', 'POST'])
-def download():
-     return send_file("theFile", as_attachment=True)
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
