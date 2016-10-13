@@ -38,11 +38,11 @@ occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne'
 def countOccurences(f, occurences):
     noRetweetsText = ""
     aTweet = ""
-    flag = True
+    #flag = True
     #with open(f, 'r+',1) as k:
     for aTweet in (f.splitlines()):
-        print (str(type(aTweet)))
-        print (aTweet)
+        #print (str(type(aTweet)))
+        #print (aTweet)
         if aTweet != '\n' and aTweet != '':
         #    aTweet += letter
         #    flag = True
@@ -82,8 +82,8 @@ def allFiles (conn):
      #   target.write(text)
     #target.close()
     #for item in itemContainer:
-        fileNr = fileNr + 1
-        print ("file: " + str(fileNr)) #+ " name: " + str(item))
+        #fileNr = fileNr + 1
+        #print ("file: " + str(fileNr)) #+ " name: " + str(item))
         try:
             countOccurences(text, occurences)
         except:
