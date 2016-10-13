@@ -31,7 +31,7 @@ conn = client.Connection(
 )
 
 
-
+#NOTE: add exception for trying to download
 json_data = []
 noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
@@ -56,7 +56,7 @@ def countOccurences(f, occurences):
                 counts = Counter(noRetweetsText.split())
                 for find in occurences:    
                     occurences[find] = occurences[find] + counts[find]
-                #break
+                break
     
 
 
@@ -70,8 +70,13 @@ def allFiles (conn):
         fileNr = fileNr + 1
         itemContainer.append(item['name'])
         #print (itemContainer[13])
-        AFile = conn.get_object( container="tweets", obj=item['name'])
-        #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
+        while True:
+            try:
+                AFile = conn.get_object( container="tweets", obj=item['name'])
+                break
+            except:
+                raise
+                #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
         print ("Working on File number: " + str(fileNr))
         #target = open("./dump.txt", 'w')
         text = str(AFile[1].decode("utf-8"))
