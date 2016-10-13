@@ -24,10 +24,10 @@ def task():
 
     return 
 
-@app.route('/theFile', methods=['GET', 'POST'])
+@app.route('/theFile/', methods=['GET', 'POST'])
 def download():
-    uploads = os.path.join(current_app.root_path, app.config['./'])
-    return send_from_directory(directory=uploads, filename="theFile")
+    #uploads = os.path.join(current_app.root_path, app.config['./'])
+    return send_from_director('./', filename="theFile")
 
 
 if __name__ == '__main__':
