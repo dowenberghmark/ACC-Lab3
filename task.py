@@ -12,6 +12,9 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 import os.path
 import gc
+from guppy import hpy
+
+h = hpy()
 # _*_ coding:utf-8 _*_
 _authurl = env['OS_AUTH_URL']
 _auth_version = '3'
@@ -89,9 +92,10 @@ def allFiles (conn):
         countOccurences(item['name'], occurences)
         #print (occurences)
         #subprocess.call(["rm", item['name'] ])
+        print (h.heap())
         gc.collect()
         #break
-    
+        
         
     print (occurences)
 
