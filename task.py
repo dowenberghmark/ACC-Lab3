@@ -89,7 +89,7 @@ def allFiles (conn):
 
         #target.close()
     for item in itemContainer:
-        countOccurences(item['name'], occurences)
+        countOccurences("./" + str(item['name']), occurences)
         #print (occurences)
         #subprocess.call(["rm", item['name'] ])
         #break
