@@ -27,25 +27,25 @@ def task():
     #f = request.files['/theFile']
     #f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
     saveJson.close()
-    return "hello"
+    return data
 
-@app.route('/theFile/', methods=['GET', 'POST'])
-def download():
-    uploads =  app.config['UPLOAD_FOLDER']
-    return send_from_directory(uploads, "theFile", as_attachment=True)
+# @app.route('/theFile/', methods=['GET', 'POST'])
+# def download():
+#     uploads =  app.config['UPLOAD_FOLDER']
+#     return send_from_directory(uploads, "theFile", as_attachment=True)
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-@app.route('/test/<filename>')
-def dictionary_download (filename):
+# @app.route('/uploads/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(app.config['UPLOAD_FOLDER'],
+#                                filename)
+# @app.route('/test/<filename>')
+# def dictionary_download (filename):
 
-    path = os.path.abspath (app.config['TYPO_DICT_PATH'])
-    assert os.path.exists (path)
+#     path = os.path.abspath (app.config['TYPO_DICT_PATH'])
+#     assert os.path.exists (path)
 
-    return send_from_directory (path, filename, as_attachment=True,
-        mimetype='application/octet-stream')
+#     return send_from_directory (path, filename, as_attachment=True,
+#         mimetype='application/octet-stream')
 
 
 if __name__ == '__main__':
