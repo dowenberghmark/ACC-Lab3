@@ -80,11 +80,12 @@ def allFiles (conn):
             raise
     for item in itemContainer:
         fileNr = fileNr + 1
-        print ("file: " + str(fileNr) + "name: " + str(item))
+        print ("file: " + str(fileNr) + " name: " + str(item))
         try:
             countOccurences("./" + str(item), occurences)
         except:
-            raise
+            print (occurences)
+        print (occurences)
         gc.collect()
         
     print (occurences)
