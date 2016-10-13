@@ -103,4 +103,4 @@ allFiles(conn)
 plt.bar(range(len(occurences)), occurences.values(), align='center')
 plt.xticks(range(len(occurences)), occurences.keys())
 
-plt.savefig("barchart.png")
+plt.savefig("./barchart.png", dpi=150)
