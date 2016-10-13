@@ -1,12 +1,14 @@
 from flask import request
 from flask import Flask
 from flask import json
-import flask
+from flask import send_from_directory
 #import json
 import subprocess
 import sys
 import os
 
+
+UPLOAD_FOLDER = '~/ACC-Lab3/'
 def transform(text_file_contents):
     return text_file_contents.replace("=", ",")
 app = Flask(__name__)
