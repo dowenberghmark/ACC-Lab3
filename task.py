@@ -68,7 +68,7 @@ def allFiles (conn):
             except:
                 raise
         text = str(AFile[1].decode("utf-8"))
-        target = open("./dump.txt", 'wa')
+        target = open("./dump.txt", 'a')
         target.write(text)
         target.close()
         
