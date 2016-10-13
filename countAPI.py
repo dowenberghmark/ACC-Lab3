@@ -20,7 +20,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/task/', methods=['GET'])
 def task():
-    data = subprocess.check_output(["python3","task.py"])
+    data = allFiles()#subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data.decode("utf-8").lower())
     print (data.decode("utf-8").lower())
