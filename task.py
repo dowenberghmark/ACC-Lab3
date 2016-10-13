@@ -44,7 +44,6 @@ def countOccurences(f, occurences):
     with open(f, 'r') as k:
     #print ("i'm to big for tweet")
         for aTweet in k:
-            gc.collect()
             #print (aTweet)
         # if letter != '\n'  :
         #     aTweet += letter
@@ -62,6 +61,7 @@ def countOccurences(f, occurences):
                         occurences[find] = occurences[find] + counts[find]
                     #break
             #print (occurences)
+    gc.collect()
 
 
 
