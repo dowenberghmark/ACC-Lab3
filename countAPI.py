@@ -19,7 +19,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def task():
     data = subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
-    jsonData = json.dumps(str(data.decode("utf-8")).lower())
+    jsonData = json.dumps(data.decode("utf-8").lower())
     print (jsonData)
     saveJson.write(jsonData)
     
@@ -27,7 +27,7 @@ def task():
     #f = request.files['/theFile']
     #f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
     saveJson.close()
-    return send_from_directory(app.config['UPLOAD_FOLDER'],saveJson)
+    return send_from_directory(app.config['UPLOAD_FOLDER'],'theFile')
 
 # @app.route('/theFile/', methods=['GET', 'POST'])
 # def download():
