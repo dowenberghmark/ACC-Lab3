@@ -12,6 +12,7 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 import os.path
 import gc
+import matplotlib.pyplot as plt
 
 # _*_ coding:utf-8 _*_
 _authurl = env['OS_AUTH_URL']
@@ -38,19 +39,14 @@ def countOccurences(f, occurences):
     noRetweetsText = ""
     
     with open(f, 'r+',1) as k:
-        #print ("here: 0 died?")
         for aTweet in k:
             if aTweet != '\n':
-                #print ("here: 1 died?")
                 formatedTweet = json.loads(aTweet)
                 if not formatedTweet["retweeted"]:
-                    #print ("here: 2 died?")
                     noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
-    #print ("here: 3 died?")
     counts = Counter(noRetweetsText.split())
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
-    #print ("here: 4 died?")
     k.close()
     
     
@@ -71,7 +67,7 @@ def allFiles (conn):
     conn.close()
     for item in itemContainer:
         fileNr = fileNr + 1
-        print ("file: " + str(fileNr) + " name: " + str(item))
+        #print ("file: " + str(fileNr) + " name: " + str(item))
         try:
             countOccurences("./" + str(item), occurences)
         except:
@@ -81,3 +77,13 @@ def allFiles (conn):
     print (occurences)
 
 allFiles(conn)
+
+
+
+
+
+
+plt.bar(range(len(occurences)), occurences.values(), align='center')
+plt.xticks(range(len(occurences)), occurences.keys())
+
+plt.show()
