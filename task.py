@@ -12,7 +12,7 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 import os.path
 import gc
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 # _*_ coding:utf-8 _*_
 _authurl = env['OS_AUTH_URL']
@@ -38,12 +38,12 @@ occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne'
 def countOccurences(f, occurences):
     noRetweetsText = ""
     
-    with open(f, 'r+',1) as k:
-        for aTweet in k:
-            if aTweet != '\n':
-                formatedTweet = json.loads(aTweet)
-                if not formatedTweet["retweeted"]:
-                    noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
+    #with open(f, 'r+',1) as k:
+    for aTweet in f:
+        if aTweet != '\n':
+            formatedTweet = json.loads(aTweet)
+            if not formatedTweet["retweeted"]:
+                noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
     counts = Counter(noRetweetsText.split())
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
@@ -57,6 +57,8 @@ def allFiles (conn):
     itemContainer = []
     containerData = conn.get_container("tweets")
     fileNr = 0
+    #target = open("./dump.txt", 'a')
+    text = ""
     for item in containerData[1]:
  
         itemContainer.append(item['name'])
@@ -68,20 +70,20 @@ def allFiles (conn):
             except:
                 raise
         text = str(AFile[1].decode("utf-8"))
-        target = open("./dump.txt", 'a')
-        target.write(text)
-        target.close()
         
-    conn.close()
-    for item in itemContainer:
+     #   target.write(text)
+    #target.close()
+        
+    
+    #for item in itemContainer:
         fileNr = fileNr + 1
         #print ("file: " + str(fileNr) + " name: " + str(item))
         try:
-            countOccurences("./dump.txt", occurences)
+            countOccurences(text, occurences)
         except:
             print (occurences)
         gc.collect()
-        
+    conn.close()    
     print (occurences)
 
 allFiles(conn)
