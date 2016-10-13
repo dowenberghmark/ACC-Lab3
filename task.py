@@ -89,10 +89,10 @@ def allFiles (conn):
         
         #target.write(text)
         #target.close()
-        countOccurences(item['name'], occurences)
+        #countOccurences(item['name'], occurences)
         #print (occurences)
         #subprocess.call(["rm", item['name'] ])
-        print (h.heap())
+        
         gc.collect()
         #break
         
