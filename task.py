@@ -12,8 +12,10 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 import os.path
 import gc
-import matplotlib.pyplot as plt
 import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
 
 # _*_ coding:utf-8 _*_
 _authurl = env['OS_AUTH_URL']
