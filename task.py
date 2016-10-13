@@ -61,6 +61,7 @@ def countOccurences(f, occurences):
                         occurences[find] = occurences[find] + counts[find]
                     #break
             #print (occurences)
+        k.close()
     gc.collect()
 
 
@@ -71,7 +72,7 @@ def allFiles (conn):
     containerData = conn.get_container("tweets")
     fileNr = 0
     for item in containerData[1]:
-        fileNr = fileNr + 1
+        
         itemContainer.append(item['name'])
         #print (itemContainer[13])
         #while True:
@@ -90,7 +91,8 @@ def allFiles (conn):
 
         #target.close()
     for item in itemContainer:
-        print (str(item))
+        fileNr = fileNr + 1
+        print ("file: " + str(fileNr))
         countOccurences("./" + str(item), occurences)
         #print (occurences)
         #subprocess.call(["rm", item['name'] ])
