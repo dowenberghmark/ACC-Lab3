@@ -32,7 +32,6 @@ conn = client.Connection(
     auth_version=_auth_version
 )
 
-json_data = []
 noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
 def countOccurences(f, occurences):
@@ -42,7 +41,6 @@ def countOccurences(f, occurences):
         for aTweet in k:
             if aTweet != '\n':
                 formatedTweet = json.loads(aTweet)
-                json_data.append(formatedTweet)
                 if not formatedTweet["retweeted"]:
                     noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
     counts = Counter(noRetweetsText.split())
@@ -56,6 +54,7 @@ def countOccurences(f, occurences):
 
 def allFiles (conn):
     itemContainer = []
+    ocurList = []
     containerData = conn.get_container("tweets")
     fileNr = 0
     for item in containerData[1]:
@@ -68,12 +67,12 @@ def allFiles (conn):
     conn.close()
     for item in itemContainer:
         fileNr = fileNr + 1
+        ocurList.append()
         print ("file: " + str(fileNr) + " name: " + str(item))
         try:
             countOccurences("./" + str(item), occurences)
         except:
             print (occurences)
-        print (occurences)
         gc.collect()
         
     print (occurences)
