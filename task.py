@@ -82,8 +82,8 @@ def allFiles (conn):
      #   target.write(text)
     #target.close()
     #for item in itemContainer:
-        fileNr = fileNr + 1
-        print ("file: " + str(fileNr)) #+ " name: " + str(item))
+ #       fileNr = fileNr + 1
+#        print ("file: " + str(fileNr)) #+ " name: " + str(item))
         try:
             countOccurences(text, occurences)
         except:
@@ -100,7 +100,7 @@ allFiles(conn)
 
 
 
-#plt.bar(range(len(occurences)), occurences.values(), align='center')
-#plt.xticks(range(len(occurences)), occurences.keys())
+plt.bar(range(len(occurences)), occurences.values(), align='center')
+plt.xticks(range(len(occurences)), occurences.keys())
 
-#plt.show()
+plt.show()
