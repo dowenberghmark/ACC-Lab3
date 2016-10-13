@@ -21,7 +21,18 @@ from flask import Flask
 from flask import send_from_directory
 from flask import send_file
 
-appToCelery = Celery('tasks', backend='amqp', broker='amqp://mast:pass@127.0.0.1/mast_host')
+def make_celery(app):
+    celery = Celery(app.import_name, backend=app.config['CELERY_BACKEND'],
+                    broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery
 
 
 # _*_ coding:utf-8 _*_
@@ -47,6 +58,7 @@ matplotlib.use('Agg')
 
 noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
+
 def countOccurences(f, occurences):
     noRetweetsText = ""
     aTweet = ""
@@ -68,7 +80,7 @@ def countOccurences(f, occurences):
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
     
-@appToCelery.task()
+celery.task()
 def allFiles (conn):
     itemContainer = []
     containerData = conn.get_container("tweets")
@@ -106,7 +118,7 @@ def allFiles (conn):
 
 
 
-@appToCelery.task(ignore_result=True)
+
 def makeBarchart():
     plt.bar(range(len(occurences)), occurences.values(), align='center')
     plt.xticks(range(len(occurences)), occurences.keys())
@@ -117,13 +129,19 @@ UPLOAD_FOLDER = '~/ACC-Lab3/'
 
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config.update(CELERY_BROKER_URL='amqp://mast:pass@127.0.0.1/mast_host',
-    CELERY_RESULT_BACKEND='amqp://mast:pass@127.0.0.1/mast_host')
 
-@app.route('/task/', methods=['GET'])
+flask_app = Flask(__name__)
+flask_app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
+)
+celery = make_celery(flask_app)
+
+flask_app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@flask_app.route('/task/', methods=['GET'])
 def task():
-    data = allFiles()#subprocess.check_output(["python3","task.py"])
+    data = allFiles(conn)#subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data.decode("utf-8").lower())
     print (data.decode("utf-8").lower())
@@ -133,7 +151,7 @@ def task():
     result = "Result: "+ str(jsonData) + "\n To download the File use:\n curl -o http://130.238.29.82:5000/theFile\n"
     return  (result)#send_file("./theFile", as_attachment= True)
 
-@app.route('/theFile', methods=['GET', 'POST'])
+@flask.app.route('/theFile', methods=['GET', 'POST'])
 def download():
      return send_file("theFile", as_attachment=True)
 
