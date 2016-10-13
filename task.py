@@ -40,12 +40,12 @@ def countOccurences(f, occurences):
     aTweet = ""
     flag = True
     #with open(f, 'r+',1) as k:
-    for letter in f:
+    for letter in (f.splitlines()):
         if letter != '\n':
-            aTweet += letter
-            flag = True
-        if letter == '\n' and flag:
-            flag = False
+        #    aTweet += letter
+        #    flag = True
+        #if letter == '\n':# and flag:
+        #    flag = False
             formatedTweet = json.loads(aTweet)
             aTweet = ""
             if not formatedTweet["retweeted"]:
