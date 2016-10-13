@@ -37,17 +37,18 @@ noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
 def countOccurences(f, occurences):
     noRetweetsText = ""
-    with open(f, 'r') as k:
-        for aTweet in k:
-            if aTweet != '\n'  :
-                print ("i'm to big for tweet")
-                formatedTweet = json.loads(aTweet)
-                json_data.append(formatedTweet)
-                if not formatedTweet["retweeted"]:
-                    noRetweetsText = (str(formatedTweet["text"]).lower())
-                    counts = Counter(noRetweetsText.split())
-                    for find in occurences:    
-                        occurences[find] = occurences[find] + counts[find]
+    ###with open(f, 'r') as k:
+    print ("i'm to big for tweet")
+    for aTweet in f:
+        if aTweet != '\n'  :
+                
+            formatedTweet = json.loads(aTweet)
+            json_data.append(formatedTweet)
+            if not formatedTweet["retweeted"]:
+                noRetweetsText = (str(formatedTweet["text"]).lower())
+                counts = Counter(noRetweetsText.split())
+                for find in occurences:    
+                    occurences[find] = occurences[find] + counts[find]
     
 
 
@@ -65,9 +66,9 @@ def allFiles (conn):
         print ("i'm to big for text")
         target = open("./dump.txt", 'w')
         text = str(AFile[1].decode("utf-8"))
-        target.write(text)
-        target.close()
-        countOccurences("./dump.txt", occurences)
+        #target.write(text)
+        #target.close()
+        countOccurences(text, occurences)
     
         
     print (occurences)
