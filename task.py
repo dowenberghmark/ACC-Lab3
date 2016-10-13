@@ -37,17 +37,21 @@ noRetweetsText = ""
 occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne': 0}
 def countOccurences(f, occurences):
     noRetweetsText = ""
-    
+    aTweet = ""
+    flag = True
     #with open(f, 'r+',1) as k:
-    for aTweet in f:
-        print (aTweet)
-        if aTweet != '\n':
+    for letter in f:
+        if letter != '\n':
+            aTweet += letter
+            flag = True
+        if letter == '\n' and flag:
+            flag = False
             formatedTweet = json.loads(aTweet)
             if not formatedTweet["retweeted"]:
                 noRetweetsText = noRetweetsText + (str(formatedTweet["text"]))
-    counts = Counter(noRetweetsText.split())
-    for find in occurences:    
-        occurences[find] = occurences[find] + counts[find]
+                counts = Counter(noRetweetsText.split())
+                for find in occurences:    
+                    occurences[find] = occurences[find] + counts[find]
     k.close()
     
     
