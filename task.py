@@ -76,7 +76,7 @@ def allFiles (conn):
         try:
             #AFile = conn.get_object( container="tweets", obj=item['name'])
             AFile = subprocess.check_call(["curl","-s" ,"-O", "http://130.238.29.253:8080/swift/v1/tweets/"+ item['name'] ])
-            break
+            #break
         except:
             raise
                 #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
