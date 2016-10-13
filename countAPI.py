@@ -25,10 +25,10 @@ def task():
 
     return 
 
-@app.route('/theFile/', methods=['GET', 'POST'])
+@app.route('/uploads/theFile/', methods=['GET', 'POST'])
 def download():
-    #uploads = os.path.join(current_app.root_path, app.config['./'])
-    return Flask.send_from_directory('./', filename="theFile")
+    uploads = os.path.join(current_app.root_path, app.config['./'])
+    return Flask.send_from_directory(uploads, "theFile", as_attachment=True)
 
 
 if __name__ == '__main__':
