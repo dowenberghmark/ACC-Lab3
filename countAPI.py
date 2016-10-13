@@ -2,6 +2,7 @@ from flask import request
 from flask import Flask
 from flask import json
 from flask import send_from_directory
+from flask import send_file
 #import json
 import subprocess
 import sys
@@ -20,14 +21,14 @@ def task():
     data = subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data.decode("utf-8").lower())
-    print (jsonData)
+    print (data.decode("utf-8").lower())
     saveJson.write(jsonData)
     
     
     #f = request.files['/theFile']
     #f.save(os.path.join(app.config['UPLOAD_FOLDER'], saveJson))
-    saveJson.close()
-    return send_from_directory(app.config['UPLOAD_FOLDER'],'theFile')
+    #saveJson.close()
+    return send_file(saveJson)
 
 # @app.route('/theFile/', methods=['GET', 'POST'])
 # def download():
