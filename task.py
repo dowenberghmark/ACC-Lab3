@@ -40,6 +40,7 @@ def countOccurences(f, occurences):
     with open(f, 'r') as k:
         for aTweet in k:
             if aTweet != '\n'  :
+                print ("i'm to big for tweet")
                 formatedTweet = json.loads(aTweet)
                 json_data.append(formatedTweet)
                 if not formatedTweet["retweeted"]:
@@ -61,6 +62,7 @@ def allFiles (conn):
         #print (itemContainer[13])
         AFile = conn.get_object( container="tweets", obj=item['name'])
         #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
+        print ("i'm to big for text")
         target = open("./dump.txt", 'w')
         text = str(AFile[1].decode("utf-8"))
         target.write(text)
