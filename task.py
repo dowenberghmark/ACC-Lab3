@@ -58,7 +58,7 @@ def countOccurences(f, occurences):
                     for find in occurences:    
                         occurences[find] = occurences[find] + counts[find]
                     #break
-            print (occurences)
+            #print (occurences)
 
 
 
@@ -79,13 +79,15 @@ def allFiles (conn):
             except:
                 raise
                 #AFile = conn.get_object( container="tweets", obj=itemContainer[13])
-        print ("Working on File number: " + str(fileNr))
+        #print ("Working on File number: " + str(fileNr))
         #target = open(item['name'], 'w')
         #text = str(target.decode("utf-8"))
         
         #target.write(text)
         #target.close()
         countOccurences(item['name'], occurences)
+        print (occurences)
+        subprocess.call(["rm", item['name'] ])
         #break
     
         
