@@ -40,8 +40,9 @@ def countOccurences(f, occurences):
     aTweet = ""
     flag = True
     #with open(f, 'r+',1) as k:
-    for letter in (f.splitlines()):
-        if letter != '\n':
+    for aTweet in (f.splitlines()):
+        
+        if aTweet != '\n':
         #    aTweet += letter
         #    flag = True
         #if letter == '\n':# and flag:
