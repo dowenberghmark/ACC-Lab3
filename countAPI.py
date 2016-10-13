@@ -27,7 +27,7 @@ def task():
 
 @app.route('/uploads/theFile/', methods=['GET', 'POST'])
 def download():
-    uploads = os.path.join(current_app.root_path, app.config['./'])
+    uploads =  app.config['./']
     return Flask.send_from_directory(uploads, "theFile", as_attachment=True)
 
 
