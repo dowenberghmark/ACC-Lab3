@@ -13,6 +13,7 @@ from keystoneauth1 import session
 import os.path
 import gc
 import matplotlib.pyplot as plt
+import matplotlib
 
 # _*_ coding:utf-8 _*_
 _authurl = env['OS_AUTH_URL']
