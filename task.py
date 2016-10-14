@@ -75,8 +75,8 @@ flask_app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def countWords():
     data = allFiles(conn)#subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
-    jsonData = json.dumps(data.decode("utf-8").lower())
-    print (data.decode("utf-8").lower())
+    jsonData = json.dumps(data)
+    #print (data.decode("utf-8").lower())
     saveJson.write(jsonData)
     
     saveJson.close()
