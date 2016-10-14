@@ -55,7 +55,7 @@ def countWords(conn):
     result = "Result: "+ str(jsonData) + "\n To download the File use:\n curl -o http://130.238.29.82:5000/theFile\n"
     return  (result)
 
-@app.route('/theFile', methods=['GET', 'POST'])
+@flask_app.route('/theFile', methods=['GET', 'POST'])
 def download():
      return send_file("theFile", as_attachment=True)
 
