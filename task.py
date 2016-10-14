@@ -98,13 +98,8 @@ def countOccurences(f, occurences):
     #flag = True
     #with open(f, 'r+',1) as k:
     for aTweet in (f.splitlines()):
-        #print (str(type(aTweet)))
-        #print (aTweet)
         if aTweet != '\n' and aTweet != '':
-        #    aTweet += letter
-        #    flag = True
-        #if letter == '\n':# and flag:
-        #    flag = False
+
             formatedTweet = json.loads(aTweet)
             #aTweet = ""
             if not formatedTweet["retweeted"]:
@@ -121,7 +116,6 @@ def allFiles (conn):
     #target = open("./dump.txt", 'a')
     text = ""
     for item in containerData[1]:
- 
         itemContainer.append(item['name'])
         while True :
             try:
@@ -131,17 +125,14 @@ def allFiles (conn):
             except:
                 raise
         text = str(AFile[1].decode("utf-8"))
-        
-     #   target.write(text)
-    #target.close()
-    #for item in itemContainer:
+      
  #       fileNr = fileNr + 1
 #        print ("file: " + str(fileNr)) #+ " name: " + str(item))
         try:
             countOccurences(text, occurences)
         except:
             raise
-            #print (occurences)
+
         gc.collect()
     conn.close()    
     return (occurences)
