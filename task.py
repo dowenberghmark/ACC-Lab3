@@ -108,7 +108,7 @@ def countOccurences(f, occurences):
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
     
-@celery.task
+@celery.task()
 def allFiles (conn):
     itemContainer = []
     containerData = conn.get_container("tweets")
