@@ -50,7 +50,7 @@ occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne'
 
 flask_app = Flask(__name__)
 flask_app.config.update(
-    CELERY_BROKER_URL='amqp://mast:pass@localhost/mast_host',
+    CELERY_BROKER_URL='amqp://mast:pass@127.0.0.1/mast_host',
     CELERY_RESULT_BACKEND='amqp'
 )
 
@@ -71,8 +71,8 @@ celery = make_celery(flask_app)
 
 flask_app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@flask_app.route('/doJob/', methods=['GET'])
-def doJob():
+@flask_app.route('/countWords', methods=['GET'])
+def countWords():
     data = allFiles(conn)#subprocess.check_output(["python3","task.py"])
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data.decode("utf-8").lower())
@@ -88,8 +88,7 @@ def download():
      return send_file("theFile", as_attachment=True)
 
 
-if __name__ == '__main__':
-    flask_app.run(host='0.0.0.0',debug=True)
+
 
 
 
@@ -114,7 +113,7 @@ def countOccurences(f, occurences):
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
     
-@celery.task()
+@celery.task
 def allFiles (conn):
     itemContainer = []
     containerData = conn.get_container("tweets")
@@ -159,3 +158,5 @@ def makeBarchart():
     plt.savefig("./barchart.png", dpi=150)
 
 
+if __name__ == '__main__':
+    flask_app.run(host='0.0.0.0',port=5000 ,debug=True)
