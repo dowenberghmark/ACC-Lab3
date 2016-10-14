@@ -5,19 +5,40 @@ import subprocess
 import sys
 import os
 from task import allFiles
-from task import makeBarchart
+from  swiftclient import client
+from swiftclient import service
+import subprocess
+import time, os, sys
+import inspect
+from os import environ as env
+import keystoneclient.v3.client as ksclient
+from keystoneauth1.identity import v3
+from keystoneauth1 import loading
+from keystoneauth1 import session
+import os.path
+#from task import makeBarchart
 
+_authurl = env['OS_AUTH_URL']
+_auth_version = '3'
+_user = env['OS_USERNAME']
+_key = env['OS_PASSWORD']
+_os_options = {
+    'user_domain_name': env['OS_USER_DOMAIN_NAME'],
+    'project_domain_name': env['OS_PROJECT_DOMAIN_NAME'],
+    'project_name': env['OS_PROJECT_NAME']
+}
 
-UPLOAD_FOLDER = '~/ACC-Lab3/'
-def transform(text_file_contents):
-    return text_file_contents.replace("=", ",")
-app = Flask(__name__)
+conn = client.Connection(
+    authurl=_authurl,
+    user=_user,
+    key=_key,
+    os_options=_os_options,
+    auth_version=_auth_version
+)
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-@app.route('/task/', methods=['GET'])
-def task():
-    data = subprocess.check_output(["python3","task.py"])
+@flask_app.route('/countWords', methods=['GET'])
+def countWords(conn):
+    data = allFiles()
     saveJson = open("./theFile", 'w')
     jsonData = json.dumps(data.decode("utf-8").lower())
     print (data.decode("utf-8").lower())
@@ -33,4 +54,4 @@ def download():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    flask_app.run(host='0.0.0.0',debug=True)
