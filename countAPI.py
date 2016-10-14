@@ -35,6 +35,13 @@ conn = client.Connection(
     os_options=_os_options,
     auth_version=_auth_version
 )
+flask_app = Flask(__name__)
+flask_app.config.update(
+    CELERY_BROKER_URL='amqp://',
+    CELERY_RESULT_BACKEND='rpc://'
+)
+
+
 
 @flask_app.route('/countWords', methods=['GET'])
 def countWords(conn):
