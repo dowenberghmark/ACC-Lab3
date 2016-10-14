@@ -50,7 +50,7 @@ occurences = {'han': 0, 'hon': 0, 'hen': 0, 'den': 0,'det': 0,'denna': 0,'denne'
 
 flask_app = Flask(__name__)
 flask_app.config.update(
-    CELERY_BROKER_URL='amqp://mass:pass@localhost:5672//',
+    CELERY_BROKER_URL='amqp://mass:pass@localhost:5672//;amqp://daow:pass@localhost:5672/myvhost/',
     CELERY_RESULT_BACKEND='amqp'
 )
 
