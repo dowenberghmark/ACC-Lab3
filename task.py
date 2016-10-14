@@ -108,7 +108,7 @@ def countOccurences(f, occurences):
     for find in occurences:    
         occurences[find] = occurences[find] + counts[find]
     
-@celery.task()
+@celery.task
 def allFiles (conn):
     itemContainer = []
     containerData = conn.get_container("tweets")
@@ -150,5 +150,4 @@ def makeBarchart():
 
 
 if __name__ == '__main__':
-    flask_app.run(host='0.0.0.0' , port=5000, debug=True)
-    print("here")
+    flask_app.run(host='0.0.0.0' ,debug=True)
